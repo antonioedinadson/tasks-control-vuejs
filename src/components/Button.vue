@@ -1,10 +1,11 @@
 <script lang="ts">
 export default {
+    name: 'Button',
     props: {
         name: String,
         disable: {
             type: Boolean,
-            defaut: false
+            default: false
         }
     }
 }

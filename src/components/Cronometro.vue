@@ -14,5 +14,5 @@ export default {
 }
 </script>
 <template>
-    <span class="text-lg mx-4">{{ tempodecorrido }}</span>
+    <span class="text-xl mx-4">{{ tempodecorrido }}</span>
 </template>

@@ -33,7 +33,11 @@ export default {
 }
 </script>
 <template>
-    <Cronometro :seconds="seconds" />
-    <Button name="PLAY" :disable="disable.play" @click="init" />
-    <Button name="STOP" :disable="disable.stop" @click="stop" />
+    <section class="mt-4 text-center">
+        <Cronometro class="font-medium" :seconds="seconds" />
+        <div class="flex gap-2 items-center mt-4">
+            <Button name="PLAY" :disable="disable.play" @click="init" />
+            <Button name="STOP" :disable="disable.stop" @click="stop" />
+        </div>
+    </section>
 </template>
