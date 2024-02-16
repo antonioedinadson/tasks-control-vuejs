@@ -6,11 +6,13 @@ import Button from '../../components/Button.vue';
 export default {
     methods: {
         del(id: string) {
-            this.store.commit('DEL', id);
+            this.store.dispatch('DEL', id);
+            this.$router.go(0);
         }
     },
     setup() {
         const store = dataStore();
+        store.dispatch('GET');
         return {
             store,
             projetos: computed(() => store.state.projetos)

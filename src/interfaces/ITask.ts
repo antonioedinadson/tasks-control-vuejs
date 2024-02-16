@@ -1,7 +1,8 @@
 import { IProjeto } from "./IProjeto";
 
 export interface ITask {
+    id: string;
     description: string;
     time: number;
-    projeto: IProjeto
+    projeto_id: String
 }

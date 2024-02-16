@@ -12,5 +12,7 @@ export default {
   <Header />
   <Navbar />
   <Notification />
-  <router-view></router-view>
+  <main class="mb-[5rem]">
+    <router-view></router-view>
+  </main>
 </template>

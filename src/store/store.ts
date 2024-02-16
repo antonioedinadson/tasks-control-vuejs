@@ -4,6 +4,8 @@ import { v1 } from 'uuid';
 import { InjectionKey } from 'vue';
 import { IProjeto } from '../interfaces/IProjeto';
 import { INotify } from '../interfaces/INotify';
+import http from '../utils/axios';
+import { ITask } from '../interfaces/ITask';
 
 export const key: InjectionKey<Store<IEstado>> = Symbol();
 
@@ -16,7 +18,8 @@ export const store = createStore<IEstado>({
 
     state: {
         projetos: [],
-        notification: []
+        notification: [],
+        tarefas: []
     },
     mutations: {
         'ADD'(state, nome: string) {
@@ -37,9 +40,53 @@ export const store = createStore<IEstado>({
             setTimeout(() => {
                 state.notification = state.notification.filter(n => n.id !== nofity.id)
             }, 3000);
-        }
+        },
+        'ALL'(state, projetos: IProjeto[]) {
+            state.projetos = projetos;
+        },
+
+        // -------------------------------------------------------------------------
+
+        'ADD_TAREFA'(state, tar: ITask) {
+            const tarefa: ITask = tar;
+            state.tarefas.push(tarefa);
+        },
+        'DEL_TAREFA'(state, id: string) {
+            const index = state.tarefas.findIndex(pro => pro.id = id);
+            state.tarefas.splice(index, 1);
+        },
+        'ALL_TAREFA'(state, tar: ITask[]) {
+            state.tarefas = tar;
+        },
     },
-    actions: {},
+    actions: {
+        'GET'({ commit }) {
+            http.get('projetos').then(res => commit('ALL', res.data));
+        },
+        'POST'(context, nome: string) {
+            http.post('projetos', { nome });
+        },
+        'PUT'(context, projeto: IProjeto) {
+            http.put(`/projetos/${projeto.id}`, projeto);
+        },
+        'DEL'(context, id: string) {
+            http.delete(`/projetos/${id}`);
+        },
+
+        'T_GET'({ commit }) {
+            http.get('tarefas').then(res => commit('ALL_TAREFA', res.data));
+        },
+        'T_POST'({ commit }, tar: ITask) {
+            http.post('tarefas', tar).then(res => {
+                commit('ADD_TAREFA', res.data);
+            })
+        },
+        'T_DEL'({ commit }, id: string) {
+            http.delete(`/tarefas/${id}`).then(res => {
+                commit('DEL_TAREFA', id);
+            })
+        },
+    },
     getters: {},
     modules: {}
 });

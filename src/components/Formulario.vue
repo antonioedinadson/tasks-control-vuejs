@@ -17,13 +17,14 @@ export default {
         finalizarTarefa(tempo: number) {
             this.$emit("salvarTarefa", {
                 description: this.task,
-                projeto: this.projetos.find(proj => proj.id = this.idProjeto),
+                projeto_id: this.projetos.find(proj => proj.id = this.idProjeto)?.id,
                 time: tempo
             })
         }
     },
     setup() {
         const store = useStore(key);
+        store.dispatch('GET');
         return {
             projetos: computed(() => store.state.projetos)
         }

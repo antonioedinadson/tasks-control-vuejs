@@ -13,13 +13,15 @@ export default {
     methods: {
         salvar() {
             if (!this.id) {
-                this.store.commit('ADD', this.projetoNome);
+                this.store.dispatch('POST', this.projetoNome);
                 this.projetoNome = '';
                 this.$router.push('/projetos');
                 return;
             }
-            this.store.commit('EDIT', { id: this.id, nome: this.projetoNome });
+
+            this.store.dispatch('PUT', { id: this.id, nome: this.projetoNome });
             this.$router.push('/projetos');
+
             this.notify({
                 id: '56565',
                 message: '54545 frfrfrfrfr',
